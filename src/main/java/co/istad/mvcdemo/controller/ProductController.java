@@ -18,14 +18,15 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    @ResponseStatus
     ResponseEntity<?> findProducts(@RequestParam(required = false, defaultValue = "") String name,
-                                     @RequestParam(required = false, defaultValue = "true") Boolean status) {
-        return new ResponseEntity<>(Map.of(
+                                   @RequestParam(required = false, defaultValue = "true") Boolean status) {
+        Map<String, Object> data = Map.of(
                 "message", "Products have been found",
-                "data", productService.findProducts(name, status)
-        ), HttpStatus.ACCEPTED);
+                "data", productService.findProducts(name, status));
+        //return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
+        return ResponseEntity.accepted().body(data);
     }
+
 
     @PutMapping("/{uuid}")
     void editProductByUuid(@PathVariable String uuid,

@@ -13,8 +13,10 @@ public record ProductCreateRequest(
         @NotNull
         Double price,
 
+        @Positive
         @NotNull
         @Max(100)
         Integer qty
+
 ) {
 }
