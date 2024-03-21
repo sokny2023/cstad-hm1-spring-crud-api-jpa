@@ -3,8 +3,10 @@ package co.istad.mvcdemo.controller;
 import co.istad.mvcdemo.dto.ProductCreateRequest;
 import co.istad.mvcdemo.dto.ProductEditRequest;
 import co.istad.mvcdemo.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -16,12 +18,13 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    Map<String, Object> findProducts(@RequestParam(required = false, defaultValue = "") String name,
+    @ResponseStatus
+    ResponseEntity<?> findProducts(@RequestParam(required = false, defaultValue = "") String name,
                                      @RequestParam(required = false, defaultValue = "true") Boolean status) {
-        return Map.of(
+        return new ResponseEntity<>(Map.of(
                 "message", "Products have been found",
                 "data", productService.findProducts(name, status)
-        );
+        ), HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/{uuid}")
@@ -38,7 +41,7 @@ public class ProductController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    void createNewProduct(@RequestBody ProductCreateRequest request) {
+    void createNewProduct(@Valid @RequestBody ProductCreateRequest request) {
         System.out.println("REQUEST: " + request);
         productService.createNewProduct(request);
     }
