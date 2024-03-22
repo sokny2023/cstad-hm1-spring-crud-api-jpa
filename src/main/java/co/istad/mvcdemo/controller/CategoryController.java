@@ -26,7 +26,9 @@ public class CategoryController {
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Categories not found",
-                    content = @Content) })
+                    content = @Content)
+    })
+
     @GetMapping
     Map<String, Object> findCategories() {
         Map<String, Object> data = new HashMap<>();
