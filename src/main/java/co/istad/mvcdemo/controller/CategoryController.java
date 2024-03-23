@@ -1,5 +1,6 @@
 package co.istad.mvcdemo.controller;
 
+import co.istad.mvcdemo.dto.CategoryRequest;
 import co.istad.mvcdemo.dto.CategoryResponse;
 import co.istad.mvcdemo.model.Product;
 import co.istad.mvcdemo.service.CategoryService;
@@ -8,12 +9,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,6 +42,23 @@ public class CategoryController {
     @GetMapping("/{id}")
     CategoryResponse findCategoryById(@PathVariable Integer id){
         return categoryService.findCategoryById(id);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    void createNewCategory(@Valid @RequestBody CategoryRequest request){
+        categoryService.createNewCategory(request);
+    }
+
+    @PutMapping("/{id}")
+    CategoryResponse editCategoryById(@PathVariable Integer id, @Valid @RequestBody CategoryRequest request){
+        return categoryService.editCategoryById(id, request);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    void deleteCategoryById(@PathVariable Integer id){
+        categoryService.deleteCategoryById(id);
     }
 
 }

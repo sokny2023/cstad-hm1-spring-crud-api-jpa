@@ -18,19 +18,45 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
+    // dto pattern
     @Override
     public void createNewCategory(CategoryRequest request) {
-
+        // check category if exist
+        if(categoryRepository.existsByName(request.name())){
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "Category name already existed...!"
+            );
+        }
+        Category category = new Category();
+        category.setName(request.name());
+        category.setDescription(request.description());
+        categoryRepository.save(category);
     }
 
     @Override
     public CategoryResponse editCategoryById(Integer id, CategoryRequest request) {
-        return null;
+        // load old data category
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Category has been not found...!"
+                ));
+        category.setDescription(request.name());
+        category.setDescription(request.description());
+        categoryRepository.save(category);
+        return this.findCategoryById(id);
     }
 
     @Override
     public void deleteCategoryById(Integer id) {
-
+        // check category if exist
+        if(categoryRepository.existsById(id)){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Category has not been found...!"
+            );
+        }
     }
 
     @Override
