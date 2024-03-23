@@ -23,10 +23,8 @@ public class ProductController {
         Map<String, Object> data = Map.of(
                 "message", "Products have been found",
                 "data", productService.findProducts(name, status));
-        //return new ResponseEntity<>(data, HttpStatus.ACCEPTED);
         return ResponseEntity.accepted().body(data);
     }
-
 
     @PutMapping("/{uuid}")
     void editProductByUuid(@PathVariable String uuid,

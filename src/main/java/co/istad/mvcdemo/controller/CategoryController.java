@@ -1,22 +1,28 @@
 package co.istad.mvcdemo.controller;
 
+import co.istad.mvcdemo.dto.CategoryResponse;
 import co.istad.mvcdemo.model.Product;
+import co.istad.mvcdemo.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/categories")
 public class CategoryController {
+
+    private final CategoryService categoryService;
 
     @Operation(summary = "Get all categories")
     @ApiResponses(value = {
@@ -30,11 +36,13 @@ public class CategoryController {
     })
 
     @GetMapping
-    Map<String, Object> findCategories() {
-        Map<String, Object> data = new HashMap<>();
-        data.put("message", "Categories have been found successfully");
-        data.put("data", List.of(" Education", " Entertainment"));
-        return data;
+    List<CategoryResponse> findCategories(){
+        return categoryService.findCategories();
+    }
+
+    @GetMapping("/{id}")
+    CategoryResponse findCategoryById(@PathVariable Integer id){
+        return categoryService.findCategoryById(id);
     }
 
 }

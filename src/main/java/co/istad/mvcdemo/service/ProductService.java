@@ -1,7 +1,6 @@
 package co.istad.mvcdemo.service;
 
 import co.istad.mvcdemo.dto.ProductCreateRequest;
-import co.istad.mvcdemo.dto.ProductDto;
 import co.istad.mvcdemo.dto.ProductEditRequest;
 import co.istad.mvcdemo.dto.ProductResponse;
 
