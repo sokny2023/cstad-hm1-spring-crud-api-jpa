@@ -67,6 +67,7 @@ public class ProductServiceImpl implements ProductService {
                     "Products has been not found...!"
             );
         }
+        productRepository.deleteById(id);
     }
 
     @Override

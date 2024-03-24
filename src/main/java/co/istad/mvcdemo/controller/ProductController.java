@@ -1,7 +1,13 @@
 package co.istad.mvcdemo.controller;
 
 import co.istad.mvcdemo.dto.*;
+import co.istad.mvcdemo.model.Product;
 import co.istad.mvcdemo.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +21,17 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+
+    @Operation(summary = "Get all products")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the products",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Product.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "products not found",
+                    content = @Content)
+    })
 
     @GetMapping
     List<ProductResponse> findProducts(){
