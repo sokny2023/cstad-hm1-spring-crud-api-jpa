@@ -28,7 +28,7 @@ public class Product {
     private LocalDate importedDate;
     private Boolean status;
 
-    @ManyToOne
-    private Category category;
+    /*@ManyToOne
+    private Category category;*/
 
 }

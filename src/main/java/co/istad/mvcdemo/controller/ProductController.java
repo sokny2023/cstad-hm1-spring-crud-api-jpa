@@ -5,11 +5,9 @@ import co.istad.mvcdemo.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -40,6 +38,10 @@ public class ProductController {
         productService.deleteProductById(id);
     }
 
+    @PutMapping("/{id}")
+    ProductResponse editProductById(@PathVariable Integer id, @Valid @RequestBody ProductCreateRequest request){
+        return productService.editCategoryById(id, request);
+    }
 
     // not complete
     /*@PutMapping("/{uuid}")

@@ -1,7 +1,6 @@
 package co.istad.mvcdemo.service.impl;
 
 import co.istad.mvcdemo.dto.*;
-import co.istad.mvcdemo.model.Category;
 import co.istad.mvcdemo.model.Product;
 import co.istad.mvcdemo.repository.ProductRepository;
 import co.istad.mvcdemo.service.ProductService;
@@ -11,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -43,9 +44,12 @@ public class ProductServiceImpl implements ProductService {
                                 HttpStatus.NOT_FOUND,
                                 "Product has been not found...!"
                         ));
+        product.setUuid(UUID.randomUUID().toString());
         product.setName(request.name());
         product.setPrice(request.price());
         product.setQty(request.qty());
+        product.setImportedDate(LocalDate.now());
+        product.setStatus(true);
         productRepository.save(product);
         return this.findProductById(id);
     }
@@ -57,7 +61,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProductById(Integer id) {
-
+        if(!productRepository.existsById(id)){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Products has been not found...!"
+            );
+        }
     }
 
     @Override

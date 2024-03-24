@@ -51,12 +51,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategoryById(Integer id) {
         // check category if exist
-        if(categoryRepository.existsById(id)){
+        if(!categoryRepository.existsById(id)){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
-                    "Category has not been found...!"
+                    "Category has bee not found...!"
             );
         }
+        categoryRepository.deleteById(id);
     }
 
     @Override
