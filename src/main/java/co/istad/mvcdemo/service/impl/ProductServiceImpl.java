@@ -30,9 +30,12 @@ public class ProductServiceImpl implements ProductService {
             );
         }
         Product product = new Product();
+        product.setUuid(UUID.randomUUID().toString());
         product.setName(request.name());
         product.setPrice(request.price());
         product.setQty(request.qty());
+        product.setImportedDate(LocalDate.now());
+        product.setStatus(true);
         productRepository.save(product);
     }
 
