@@ -1,4 +1,10 @@
 package co.istad.mvcdemo.repository;
 
-public interface ProductRepository {
+import co.istad.mvcdemo.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ProductRepository extends JpaRepository<Product,Integer>{
+    Boolean existsByName(String name);
 }

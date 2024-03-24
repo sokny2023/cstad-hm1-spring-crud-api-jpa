@@ -7,7 +7,6 @@ public record CategoryRequest(
         @NotBlank
         @Size(max = 40)
         String name,
-        @NotBlank
         String description
 ) {
 }
